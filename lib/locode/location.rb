@@ -202,7 +202,7 @@ module Locode
     #
     # Returns an Array containing Integer or :B with the following
     #   meanings:
-    #   1 = seaport, any port with the possibility of transport via water
+    #   1 = any port with the possibility of transport via water
     #   2 = rail terminal
     #   3 = road terminal
     #   4 = airport
@@ -334,6 +334,12 @@ module Locode
       hash
     end
 
+    # Seaports are ports and included in a special list.
+    def seaport?
+      function_classifier.include?(1) &&
+        (Locode::ALL_SEAPORTS.include?(full_name) || Locode::ALL_SEAPORTS.include?(full_name_without_diacritics))
+    end
+
     private
 
     # Internal: sets the ISO 3166 alpha-2 Country Code
@@ -449,7 +455,7 @@ module Locode
     # Internal: Used to link name of a status and the status number
     def self.functions_name_identifier
       {
-        seaport: 1,
+        port: 1,
         rail_terminal: 2,
         road_terminal: 3,
         airport: 4,
@@ -462,7 +468,7 @@ module Locode
 
     # Dynamically defines the following predicates:
     #
-    # seaport?
+    # port?
     # rail_terminal?
     # road_terminal?
     # airport?
@@ -478,5 +484,6 @@ module Locode
         function_classifier.include?(value)
       end
     end
+
   end
 end

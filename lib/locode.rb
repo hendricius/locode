@@ -9,9 +9,14 @@ module Locode
   end
   private_class_method :load_data
 
+  def self.load_seaports
+    YAML.load(File.read(File.expand_path('../../data/yaml/seaports.yml', __FILE__)))
+  end
+  private_class_method :load_seaports
+
   ALL_LOCATIONS = load_data
   private_constant :ALL_LOCATIONS
-
+  ALL_SEAPORTS = load_seaports
 
   def self.seaports(limit = ALL_LOCATIONS.size)
     ALL_LOCATIONS.select {|location| location.seaport? }.take(limit)
