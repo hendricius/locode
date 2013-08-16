@@ -28,6 +28,12 @@ module Locode
     end.take(limit)
   end
 
+  def self.ports_by_country(country_code, limit = ALL_LOCATIONS.size)
+    ALL_LOCATIONS.select do |location|
+      location.port? && location.country_code == country_code
+    end.take(limit)
+  end
+
   def self.rail_terminals(limit = ALL_LOCATIONS.size)
     ALL_LOCATIONS.select {|location| location.rail_terminal? }.take(limit)
   end
